@@ -2,6 +2,13 @@
 
 This tool was created for research purposes, as a part of my paper, [Simple Scripts Evaluate Android Application Security](https://github.com/Patricol/Automated-Security-Analysis/blob/master/Simple%20Scripts%20Evaluate%20Android%20Application%20Security%20-%20Patrick%20Collins.pdf).
 
+For the research paper, 100 applications were examined. 50 were pulled from the Google Play Store randomly by a script. 50 were chosen from the Google Play Store's selection of IOT apps.
+
+Sample output is available; describing vulnerabilities found in:
+* [Angry Birds Star Wars 2](https://github.com/Patricol/Automated-Security-Analysis/blob/master/sample_output/com.rovio.angrybirdsstarwarsii.ads-output.txt)
+* [Nokia Smart Home](https://github.com/Patricol/Automated-Security-Analysis/blob/master/sample_output/com.nokia.dhbu.smartHome-output.txt)
+
+
 ## Functionality
 * searches through disassembled android applications to find
   * security vulnerabilities, like:
