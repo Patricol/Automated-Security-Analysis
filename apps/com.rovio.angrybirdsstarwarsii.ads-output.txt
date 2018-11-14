@@ -1,0 +1,150 @@
+Manifest Uses Internet & Coarse Location
+Manifest Uses Internet & Camera
+Worrisome String: SslErrorHandler;->proceed()V
+./smali/com/inmobi/androidsdk/impl/net/WebviewLoader$MyWebViewClient.smali
+Invocations:
+./smali/com/inmobi/androidsdk/impl/net/WebviewLoader$b.smali:58:    invoke-direct {v1}, Lcom/inmobi/androidsdk/impl/net/WebviewLoader$MyWebViewClient;-><init>()V
+Context Starts: Line: 166
+Issue:          Line: 191
+Context:
+166	 .method public onReceivedSslError(Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
+167	 .locals 3
+168	
+169	 const-string v0, "InMobiAndroidSDK_3.7.0"
+170	
+171	 new-instance v1, Ljava/lang/StringBuilder;
+172	
+173	 invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+174	
+175	 const-string v2, "SSL Error.Webview will proceed "
+176	
+177	 invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+178	
+179	 move-result-object v1
+180	
+181	 invoke-virtual {v1, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+182	
+183	 move-result-object v1
+184	
+185	 invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+186	
+187	 move-result-object v1
+188	
+189	 invoke-static {v0, v1}, Lcom/inmobi/commons/internal/Log;->internal(Ljava/lang/String;Ljava/lang/String;)V
+190	
+*****ISSUE*****
+191	 invoke-virtual {p2}, Landroid/webkit/SslErrorHandler;->proceed()V
+*****ISSUE*****
+192	
+193	 invoke-super {p0, p1, p2, p3}, Landroid/webkit/WebViewClient;->onReceivedSslError(Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
+194	
+195	 return-void
+196	 .end method
+
+Worrisome String: SslErrorHandler;->proceed()V
+./smali/com/inmobi/re/container/IMWebView$d.smali
+Invocations:
+./smali/com/inmobi/re/container/IMWebView.smali:1063:    invoke-direct {v2, p0, p1}, Lcom/inmobi/re/container/IMWebView$d;-><init>(Lcom/inmobi/re/container/IMWebView;Landroid/webkit/SslErrorHandler;)V
+Context Starts: Line: 29
+Issue:          Line: 36
+Context:
+29	 .method public onClick(Landroid/content/DialogInterface;I)V
+30	 .locals 1
+31	
+32	 invoke-interface {p1}, Landroid/content/DialogInterface;->cancel()V
+33	
+34	 iget-object v0, p0, Lcom/inmobi/re/container/IMWebView$d;->a:Landroid/webkit/SslErrorHandler;
+35	
+*****ISSUE*****
+36	 invoke-virtual {v0}, Landroid/webkit/SslErrorHandler;->proceed()V
+*****ISSUE*****
+37	
+38	 return-void
+39	 .end method
+
+./smali/com/burstly/lib/util/BurstlySSLSocketFactory$1.smali
+Invocations:
+./smali/com/burstly/lib/util/BurstlySSLSocketFactory.smali:27:    invoke-direct {v0, p0}, Lcom/burstly/lib/util/BurstlySSLSocketFactory$1;-><init>(Lcom/burstly/lib/util/BurstlySSLSocketFactory;)V
+Context Starts: Line: 25
+Issue:          Line: 25
+Context:
+25	 .method public checkClientTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+26	 .locals 0
+27	
+28	 return-void
+29	 .end method
+
+./smali/com/burstly/lib/util/BurstlySSLSocketFactory$1.smali
+Invocations:
+./smali/com/burstly/lib/util/BurstlySSLSocketFactory.smali:27:    invoke-direct {v0, p0}, Lcom/burstly/lib/util/BurstlySSLSocketFactory$1;-><init>(Lcom/burstly/lib/util/BurstlySSLSocketFactory;)V
+Context Starts: Line: 31
+Issue:          Line: 31
+Context:
+31	 .method public checkServerTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+32	 .locals 0
+33	
+34	 return-void
+35	 .end method
+
+Worrisome String: ALLOW_ALL_HOSTNAME_VERIFIER
+./smali/com/burstly/lib/util/Utils.smali
+Invocations:
+./smali/com/burstly/lib/util/Utils.smali:3876:    invoke-static {}, Lcom/burstly/lib/util/Utils;->getClient()Lorg/apache/http/client/HttpClient;
+Context Starts: Line: 1638
+Issue:          Line: 1660
+Context:
+1638	 .method private static getClient()Lorg/apache/http/client/HttpClient;
+1639	 .locals 7
+1640	
+1641	 :try_start_0
+1642	 invoke-static {}, Ljava/security/KeyStore;->getDefaultType()Ljava/lang/String;
+1643	
+1644	 move-result-object v0
+1645	
+1646	 invoke-static {v0}, Ljava/security/KeyStore;->getInstance(Ljava/lang/String;)Ljava/security/KeyStore;
+1647	
+1648	 move-result-object v0
+1649	
+1650	 const/4 v1, 0x0
+1651	
+1652	 const/4 v2, 0x0
+1653	
+1654	 invoke-virtual {v0, v1, v2}, Ljava/security/KeyStore;->load(Ljava/io/InputStream;[C)V
+1655	
+1656	 new-instance v1, Lcom/burstly/lib/util/BurstlySSLSocketFactory;
+1657	
+1658	 invoke-direct {v1, v0}, Lcom/burstly/lib/util/BurstlySSLSocketFactory;-><init>(Ljava/security/KeyStore;)V
+1659	
+*****ISSUE*****
+1660	 sget-object v0, Lorg/apache/http/conn/ssl/SSLSocketFactory;->ALLOW_ALL_HOSTNAME_VERIFIER:Lorg/apache/http/conn/ssl/X509HostnameVerifier;
+*****ISSUE*****
+1661	
+1662	 invoke-virtual {v1, v0}, Lorg/apache/http/conn/ssl/SSLSocketFactory;->setHostnameVerifier(Lorg/apache/http/conn/ssl/X509HostnameVerifier;)V
+1663	
+1664	 new-instance v2, Lorg/apache/http/params/BasicHttpParams;
+1665	
+1666	 invoke-direct {v2}, Lorg/apache/http/params/BasicHttpParams;-><init>()V
+1667	
+1668	 sget-object v0, Lorg/apache/http/HttpVersion;->HTTP_1_1:Lorg/apache/http/HttpVersion;
+1669	
+1670	 invoke-static {v2, v0}, Lorg/apache/http/params/HttpProtocolParams;->setVersion(Lorg/apache/http/params/HttpParams;Lorg/apache/http/ProtocolVersion;)V
+1671	
+1672	 const-string v0, "UTF-8"
+1673	
+1674	 invoke-static {v2, v0}, Lorg/apache/http/params/HttpProtocolParams;->setContentCharset(Lorg/apache/http/params/HttpParams;Ljava/lang/String;)V
+1675	
+1676	 invoke-static {}, Lcom/burstly/lib/network/TimeoutManager;->getConnectTimeout()I
+1677	
+1678	 move-result v0
+1679	
+1680	 invoke-static {v2, v0}, Lorg/apache/http/params/HttpConnectionParams;->setConnectionTimeout(Lorg/apache/http/params/HttpParams;I)V
+1681	
+1682	 invoke-static {}, Lcom/burstly/lib/network/TimeoutManager;->getReadimeout()I
+1683	
+1684	 move-result v0
+1685	
+1686	 invoke-static {v2, v0}, Lorg/apache/http/params/HttpConnectionParams;->setSoTimeout(Lorg/apache/http/params/HttpParams;I)V
+1687	
+1688	 new-instance v0, Lorg/apache/http/conn/scheme/SchemeRegistry;
+1689	
+

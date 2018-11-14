@@ -1,0 +1,261 @@
+Worrisome String: trustAll
+./smali/org/eclipse/jetty/util/ssl/SslContextFactory.smali
+Invocations:
+./smali/org/eclipse/jetty/websocket/WebSocketClientFactory.smali:161:    invoke-direct {v0}, Lorg/eclipse/jetty/util/ssl/SslContextFactory;-><init>()V
+Context Starts: Line: 101
+Issue:          Line: 101
+Context:
+101	 .field private _trustAll:Z
+
+Worrisome String: trustAll
+./smali/org/eclipse/jetty/util/ssl/SslContextFactory.smali
+Invocations:
+./smali/org/eclipse/jetty/websocket/WebSocketClientFactory.smali:161:    invoke-direct {v0}, Lorg/eclipse/jetty/util/ssl/SslContextFactory;-><init>()V
+./smali/org/eclipse/jetty/websocket/WebSocketClientFactory.smali:161:    invoke-direct {v0}, Lorg/eclipse/jetty/util/ssl/SslContextFactory;-><init>()V
+Context Starts: Line: 211
+Issue:          Line: 296
+Context:
+211	 .method public constructor <init>()V
+267	 const-string v0, "TLS"
+268	
+269	 iput-object v0, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_sslProtocol:Ljava/lang/String;
+270	
+271	 .line 162
+272	 sget-object v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->DEFAULT_KEYMANAGERFACTORY_ALGORITHM:Ljava/lang/String;
+273	
+274	 iput-object v0, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_keyManagerFactoryAlgorithm:Ljava/lang/String;
+275	
+276	 .line 164
+277	 sget-object v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->DEFAULT_TRUSTMANAGERFACTORY_ALGORITHM:Ljava/lang/String;
+278	
+279	 iput-object v0, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_trustManagerFactoryAlgorithm:Ljava/lang/String;
+280	
+281	 .line 171
+282	 const/4 v0, -0x1
+283	
+284	 iput v0, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_maxCertPathLength:I
+285	
+286	 .line 175
+287	 iput-boolean v1, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_enableCRLDP:Z
+288	
+289	 .line 177
+290	 iput-boolean v1, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_enableOCSP:Z
+291	
+292	 .line 186
+293	 iput-boolean v2, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_sessionCachingEnabled:Z
+294	
+295	 .line 200
+*****ISSUE*****
+296	 iput-boolean v2, p0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_trustAll:Z
+*****ISSUE*****
+297	
+298	 .line 201
+299	 return-void
+300	 .end method
+
+Worrisome String: trustAll
+./smali/org/eclipse/jetty/util/ssl/SslContextFactory.smali
+Invocations:
+./smali/org/eclipse/jetty/websocket/WebSocketClientFactory.smali:161:    invoke-direct {v0}, Lorg/eclipse/jetty/util/ssl/SslContextFactory;-><init>()V
+Context Starts: Line: 530
+Issue:          Line: 596
+Context:
+530	 .method protected doStart()V
+567	 iget-object v12, v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_keyStorePath:Ljava/lang/String;
+568	
+569	 if-nez v12, :cond_4
+570	
+571	 move-object/from16 v0, p0
+572	
+573	 iget-object v12, v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_trustStore:Ljava/security/KeyStore;
+574	
+575	 if-nez v12, :cond_4
+576	
+577	 move-object/from16 v0, p0
+578	
+579	 iget-object v12, v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_trustStoreInputStream:Ljava/io/InputStream;
+580	
+581	 if-nez v12, :cond_4
+582	
+583	 move-object/from16 v0, p0
+584	
+585	 iget-object v12, v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_trustStorePath:Ljava/lang/String;
+586	
+587	 if-nez v12, :cond_4
+588	
+589	 .line 217
+590	 const/4 v10, 0x0
+591	
+592	 .line 219
+593	 .local v10, "trust_managers":[Ljavax/net/ssl/TrustManager;
+594	 move-object/from16 v0, p0
+595	
+*****ISSUE*****
+596	 iget-boolean v12, v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_trustAll:Z
+*****ISSUE*****
+597	
+598	 if-eqz v12, :cond_0
+599	
+600	 .line 221
+601	 sget-object v12, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->LOG:Lorg/eclipse/jetty/util/log/Logger;
+602	
+603	 const-string v13, "No keystore or trust store configured. ACCEPTING UNTRUSTED CERTIFICATES!!!!!"
+604	
+605	 const/4 v14, 0x0
+606	
+607	 new-array v14, v14, [Ljava/lang/Object;
+608	
+609	 invoke-interface {v12, v13, v14}, Lorg/eclipse/jetty/util/log/Logger;->debug(Ljava/lang/String;[Ljava/lang/Object;)V
+610	
+611	 .line 223
+612	 sget-object v10, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->TRUST_ALL_CERTS:[Ljavax/net/ssl/TrustManager;
+613	
+614	 .line 226
+615	 :cond_0
+616	 move-object/from16 v0, p0
+617	
+618	 iget-object v12, v0, Lorg/eclipse/jetty/util/ssl/SslContextFactory;->_secureRandomAlgorithm:Ljava/lang/String;
+619	
+620	 if-nez v12, :cond_2
+621	
+622	 const/4 v7, 0x0
+623	
+624	 .line 227
+625	 .local v7, "secureRandom":Ljava/security/SecureRandom;
+
+./smali/org/eclipse/jetty/util/ssl/SslContextFactory$1.smali
+Invocations:
+./smali/org/eclipse/jetty/util/ssl/SslContextFactory.smali:138:    invoke-direct {v2}, Lorg/eclipse/jetty/util/ssl/SslContextFactory$1;-><init>()V
+Context Starts: Line: 33
+Issue:          Line: 33
+Context:
+33	 .method public checkClientTrusted([Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+34	 .locals 0
+35	 .param p1, "certs" # [Ljava/security/cert/X509Certificate;
+36	 .param p2, "authType" # Ljava/lang/String;
+37	
+38	 .prologue
+39	 .line 81
+40	 return-void
+41	 .end method
+
+Worrisome String: trustAll
+./smali/com/synconset/CordovaHttp.smali
+Invocations:
+./smali/com/synconset/CordovaHttpUpload.smali:44:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpGet.smali:34:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpDownload.smali:40:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpHead.smali:34:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpPost.smali:34:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+Context Starts: Line: 405
+Issue:          Line: 420
+Context:
+405	 .method protected setupSecurity(Lcom/github/kevinsawicki/http/HttpRequest;)Lcom/github/kevinsawicki/http/HttpRequest;
+406	 .locals 1
+407	 .param p1, "request" # Lcom/github/kevinsawicki/http/HttpRequest;
+408	
+409	 .prologue
+410	 .line 89
+411	 sget-object v0, Lcom/synconset/CordovaHttp;->acceptAllCerts:Ljava/util/concurrent/atomic/AtomicBoolean;
+412	
+413	 invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+414	
+415	 move-result v0
+416	
+417	 if-eqz v0, :cond_0
+418	
+419	 .line 90
+*****ISSUE*****
+420	 invoke-virtual {p1}, Lcom/github/kevinsawicki/http/HttpRequest;->trustAllCerts()Lcom/github/kevinsawicki/http/HttpRequest;
+*****ISSUE*****
+421	
+422	 .line 92
+423	 :cond_0
+424	 sget-object v0, Lcom/synconset/CordovaHttp;->validateDomainName:Ljava/util/concurrent/atomic/AtomicBoolean;
+425	
+426	 invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+427	
+428	 move-result v0
+429	
+430	 if-nez v0, :cond_1
+431	
+432	 .line 93
+433	 invoke-virtual {p1}, Lcom/github/kevinsawicki/http/HttpRequest;->trustAllHosts()Lcom/github/kevinsawicki/http/HttpRequest;
+434	
+435	 .line 95
+436	 :cond_1
+437	 sget-object v0, Lcom/synconset/CordovaHttp;->sslPinning:Ljava/util/concurrent/atomic/AtomicBoolean;
+438	
+439	 invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+440	
+441	 move-result v0
+442	
+443	 if-eqz v0, :cond_2
+444	
+445	 .line 96
+446	 invoke-virtual {p1}, Lcom/github/kevinsawicki/http/HttpRequest;->pinToCerts()Lcom/github/kevinsawicki/http/HttpRequest;
+447	
+448	 .line 98
+449	 :cond_2
+
+Worrisome String: trustAll
+./smali/com/synconset/CordovaHttp.smali
+Invocations:
+./smali/com/synconset/CordovaHttpUpload.smali:44:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpGet.smali:34:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpDownload.smali:40:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpHead.smali:34:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+./smali/com/synconset/CordovaHttpPost.smali:34:    invoke-direct {p0, p1, p2, p3, p4}, Lcom/synconset/CordovaHttp;-><init>(Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Lorg/apache/cordova/CallbackContext;)V
+Context Starts: Line: 405
+Issue:          Line: 433
+Context:
+405	 .method protected setupSecurity(Lcom/github/kevinsawicki/http/HttpRequest;)Lcom/github/kevinsawicki/http/HttpRequest;
+406	 .locals 1
+407	 .param p1, "request" # Lcom/github/kevinsawicki/http/HttpRequest;
+408	
+409	 .prologue
+410	 .line 89
+411	 sget-object v0, Lcom/synconset/CordovaHttp;->acceptAllCerts:Ljava/util/concurrent/atomic/AtomicBoolean;
+412	
+413	 invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+414	
+415	 move-result v0
+416	
+417	 if-eqz v0, :cond_0
+418	
+419	 .line 90
+420	 invoke-virtual {p1}, Lcom/github/kevinsawicki/http/HttpRequest;->trustAllCerts()Lcom/github/kevinsawicki/http/HttpRequest;
+421	
+422	 .line 92
+423	 :cond_0
+424	 sget-object v0, Lcom/synconset/CordovaHttp;->validateDomainName:Ljava/util/concurrent/atomic/AtomicBoolean;
+425	
+426	 invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+427	
+428	 move-result v0
+429	
+430	 if-nez v0, :cond_1
+431	
+432	 .line 93
+*****ISSUE*****
+433	 invoke-virtual {p1}, Lcom/github/kevinsawicki/http/HttpRequest;->trustAllHosts()Lcom/github/kevinsawicki/http/HttpRequest;
+*****ISSUE*****
+434	
+435	 .line 95
+436	 :cond_1
+437	 sget-object v0, Lcom/synconset/CordovaHttp;->sslPinning:Ljava/util/concurrent/atomic/AtomicBoolean;
+438	
+439	 invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;->get()Z
+440	
+441	 move-result v0
+442	
+443	 if-eqz v0, :cond_2
+444	
+445	 .line 96
+446	 invoke-virtual {p1}, Lcom/github/kevinsawicki/http/HttpRequest;->pinToCerts()Lcom/github/kevinsawicki/http/HttpRequest;
+447	
+448	 .line 98
+449	 :cond_2
+450	 return-object p1
+451	 .end method
+
