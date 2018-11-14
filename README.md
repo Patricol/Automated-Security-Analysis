@@ -1,6 +1,6 @@
 # Automated Security Analysis
 
-This tool was created for research purposes, as a part of my paper, [Simple Scripts Evaluate Android Application Security](https://github.com/Patricol/Automated-Security-Analysis/blob/master/Simple Scripts Evaluate Android Application Security - Patrick Collins.pdf).
+This tool was created for research purposes, as a part of my paper, [Simple Scripts Evaluate Android Application Security](https://github.com/Patricol/Automated-Security-Analysis/blob/master/Simple%20Scripts%20Evaluate%20Android%20Application%20Security%20-%20Patrick%20Collins.pdf).
 
 ## Functionality
 * searches through disassembled android applications to find
@@ -18,7 +18,7 @@ This tool was created for research purposes, as a part of my paper, [Simple Scri
     * disassemble.sh automates this if apktool is installed.
 * The helper scripts are unnecessary; you can just run analyze.sh in a disassembled app's folder.
 
-## Uses
+## Made Using
   * bash scripting
   * common utilities like:
     * find
